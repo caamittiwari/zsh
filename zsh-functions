@@ -1,0 +1,70 @@
+# Function to source files if they exist
+function zsh_add_file() {
+    [ -f "$ZDOTDIR/$1" ] && source "$ZDOTDIR/$1"
+}
+
+function zsh_add_plugin() {
+    PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+    if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then
+        # For plugins
+        zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" || \
+        zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
+
+    else
+        git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
+    fi
+}
+
+function zsh_add_completion() {
+    PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+    if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then
+        # For completions
+		completion_file_path=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
+		fpath+="$(dirname "${completion_file_path}")"
+        zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh"
+    else
+        git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
+		fpath+=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
+        [ -f $ZDOTDIR/.zccompdump ] && $ZDOTDIR/.zccompdump
+    fi
+	completion_file="$(basename "${completion_file_path}")"
+	if [ "$2" = true ] && compinit "${completion_file:1}"
+}
+# creation virtual env
+
+function c_venv(){
+
+    if [ -d "$PWD/.venv" ];then
+        source .venv/bin/activate
+    else 
+      if [ -z "$1" ]; then
+
+       echo  "as no python version selected as  argument default will run "
+        python3 -m venv $PWD/.venv && source .venv/bin/activate
+      else  
+        if [[ "$1" -eq 3.8 ]]; then
+          echo " python3.8  will install"
+          python$1 -m venv $PWD/.venv && source .venv/bin/activate
+        else 
+          echo "selected version not install"
+          read "ANSWER? Are you go with default version? Y/N "
+          case "$ANSWER" in
+          [yY] | [yY][eE][sS])
+          python3 -m venv $PWD/.venv && source .venv/bin/activate
+            ;;
+          [nN] | [nN][oO])
+            echo "please do it manaualy [ install required python version and   use command 'python[version no ] -m venv .venv'  ]"
+            ;;
+          *)
+            echo "Please enter y/yes or n/no"
+            ;;
+        esac
+        # python3 -m venv $PWD/.venv && source .venv/bin/activate
+        fi  
+      fi
+    fi
+
+
+
+}
+
