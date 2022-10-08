@@ -32,25 +32,44 @@ function zsh_add_completion() {
 }
 # creation virtual env
 
+ function create_venv_folder_with_default(){
+        
+        if [ -z "$1" ]; then 
+        python3 -m venv $PWD/.venv && source .venv/bin/activate
+        else
+        python$1 -m venv $PWD/.venv && source .venv/bin/activate
+        fi
+        # $(pip3 install pylint) # linter  added virtual  env 
+        touch $PWD/pyrightconfig.json && echo '{ "venvPath": "." , "venv":".venv"}' > $PWD/pyrightconfig.json  # to avoid import error 
+ }
+
+ 
+
 function c_venv(){
 
     if [ -d "$PWD/.venv" ];then
+      echo  ".venv is exist and  virtual activate"
         source .venv/bin/activate
     else 
-      if [ -z "$1" ]; then
+      p=$(python3 --version)  #  for default version
+      Req_p=$1
+      if [ -z "$1" ]; then 
+         
+       echo  "as no python version selected as  argument default $p version will use for virtual env "
+       $(create_venv_folder_with_default)
 
-       echo  "as no python version selected as  argument default will run "
-        python3 -m venv $PWD/.venv && source .venv/bin/activate
       else  
-        if [[ "$1" -eq 3.8 ]]; then
-          echo " python3.8  will install"
-          python$1 -m venv $PWD/.venv && source .venv/bin/activate
+        if [[ $Req_p -eq 3.8 ]]; then
+          echo " python$Req_p  will install"
+          $(create_venv_folder_with_default)
+          
         else 
-          echo "selected version not install"
-          read "ANSWER? Are you go with default version? Y/N "
+          echo "selected version python$Req_p not install"
+          read "ANSWER? Are you go with default version $p? Y/N "
           case "$ANSWER" in
           [yY] | [yY][eE][sS])
-          python3 -m venv $PWD/.venv && source .venv/bin/activate
+          # $1=""
+          $(create_venv_folder_with_default)
             ;;
           [nN] | [nN][oO])
             echo "please do it manaualy [ install required python version and   use command 'python[version no ] -m venv .venv'  ]"
@@ -59,7 +78,6 @@ function c_venv(){
             echo "Please enter y/yes or n/no"
             ;;
         esac
-        # python3 -m venv $PWD/.venv && source .venv/bin/activate
         fi  
       fi
     fi

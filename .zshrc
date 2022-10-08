@@ -1,9 +1,10 @@
+zmodload zsh/zprof
 #!/usr/bin/sh
-export ZDOTDIR=$HOME/.config/zsh
+export ZDOTDIR=$HOME/.config/zsh 
 HISTFILE=~/.zsh_history
 setopt appendhistory
-# export DISPLAY=Localhost:0.0 # XWING Server
-set clipboard=unnamedplus
+export DISPLAY=:0 # XWING Server
+# set clipboard=unnamedplus
 # Flex on the ubuntu users
 # neofetch
 
@@ -14,10 +15,22 @@ stty stop undef		# Disable ctrl-s to freeze terminal.
 zle_highlight=('paste:none')
 
 # beeping is annoying
-unsetopt BEEP
+unsetopt BEEP 
 
 
 # completions
+# autoload -Uz compinit 
+# if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+# 	compinit;
+# else
+# 	compinit -C;
+# fi;
+# autoload -Uz compinit
+# for dump in ~/.zcompdump(N.mh+24); do
+  # compinit
+# done
+# compinit -C
+
 autoload -Uz compinit
 autoload -U compinit && compinit
 zstyle ':completion:*' menu select
@@ -37,14 +50,22 @@ zle -N down-line-or-beginning-search
 # Colors
 autoload -Uz colors && colors
 
-# Useful Functions
+# Useful 
 source "$ZDOTDIR/zsh-functions"
+source "$ZDOTDIR/zsh-aliases"
+source "$ZDOTDIR/zsh-exports"
+source "$ZDOTDIR/zsh-vim-mode"
+source "$ZDOTDIR/zsh-prompt"
 
-# Normal files to source
-zsh_add_file "zsh-exports"
-zsh_add_file "zsh-vim-mode"
-zsh_add_file "zsh-aliases"
-zsh_add_file "zsh-prompt"
+# Function to source files if they exist
+# function zsh_add_file() {
+#     [ -f "$ZDOTDIR/$1" ] && source "$ZDOTDIR/$1" 
+# }
+# # Normal files to source
+# zsh_add_file "zsh-exports"
+# zsh_add_file "zsh-vim-mode"
+# zsh_add_file "zsh-aliases"
+# zsh_add_file "zsh-prompt"
 
 # Plugins
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
@@ -81,14 +102,14 @@ bindkey -r "^d"
 
 # FZF
 # TODO update for mac
-[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f $ZDOTDIR/completion/_fnm ] && fpath+="$ZDOTDIR/completion/"
+# [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+# [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+# [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+# [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f $ZDOTDIR/completion/_fnm ] && fpath+="$ZDOTDIR/completion/"
 # export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
-compinit
+# compinit
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
@@ -134,7 +155,7 @@ copython() {
         -e "s/\, line [[:digit:]]\+/${boldred}&${norm}/g"}
 
 # colur  tree command
-eval "$(dircolors -b)"
+# eval "$(dircolors -b)"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
@@ -144,13 +165,19 @@ export PATH=$PATH:$HOME/bin
 # eval "$(starship init zsh)"
 # export DISPLAY=172.30.240.1:0.0
 # export LIBGL_ALWAYS_INDIRECT=1
-# Are we in the bottle?
-if [[ -v INSIDE_GENIE ]]; then
-  echo -n " * Waiting for systemd (user)...genie working in back background " # 
-  until systemctl --user is-system-running &>/dev/null
-  do
-    sleep 1
-    echo -n "."
-  done
-  echo
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/amit/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/amit/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/amit/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/amit/anaconda3/bin:$PATH"
+    fi
 fi
+unset __conda_setup
+# <<< conda initialize <<<
+
