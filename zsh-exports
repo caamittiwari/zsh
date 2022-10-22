@@ -9,6 +9,12 @@ export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.local/share/go/bin:$PATH
 export GOPATH=$HOME/.local/share/go
 export PATH=$HOME/.fnm:$PATH
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
+export PATH=$HOME/julia-1.7.3/bin:$PATH
+export PATH=$HOME/node_modules/.bin:$PATH
+export PATH=$PATH:$HOME/bin
 
 
 # export PATH=usr/bin/pip3:$PATH

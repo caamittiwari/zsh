@@ -1,5 +1,6 @@
-zmodload zsh/zprof
+
 #!/usr/bin/sh
+zmodload zsh/zprof
 export ZDOTDIR=$HOME/.config/zsh 
 HISTFILE=~/.zsh_history
 setopt appendhistory
@@ -19,24 +20,15 @@ unsetopt BEEP
 
 
 # completions
-# autoload -Uz compinit 
-# if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-# 	compinit;
-# else
-# 	compinit -C;
-# fi;
-# autoload -Uz compinit
-# for dump in ~/.zcompdump(N.mh+24); do
-  # compinit
-# done
-# compinit -C
-
 autoload -Uz compinit
-autoload -U compinit && compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
 zstyle ':completion:*' menu select
 # zstyle ':completion::complete:lsof:*' menu yes select
 zmodload zsh/complist
-# compinit
 _comp_options+=(globdots)		# Include hidden files.
 
 # Auto complete with case insenstivity
@@ -50,22 +42,14 @@ zle -N down-line-or-beginning-search
 # Colors
 autoload -Uz colors && colors
 
-# Useful 
-source "$ZDOTDIR/zsh-functions"
-source "$ZDOTDIR/zsh-aliases"
-source "$ZDOTDIR/zsh-exports"
-source "$ZDOTDIR/zsh-vim-mode"
-source "$ZDOTDIR/zsh-prompt"
+# Add on file with .zshrc
+#"zsh-prompt"
+zsh_add_file=("zsh-functions" "zsh-prompt"  "zsh-aliases" "zsh-vim-mode")
+for file in "${zsh_add_file[@]}" 
+do
+  source "$ZDOTDIR/$file" 
+done  
 
-# Function to source files if they exist
-# function zsh_add_file() {
-#     [ -f "$ZDOTDIR/$1" ] && source "$ZDOTDIR/$1" 
-# }
-# # Normal files to source
-# zsh_add_file "zsh-exports"
-# zsh_add_file "zsh-vim-mode"
-# zsh_add_file "zsh-aliases"
-# zsh_add_file "zsh-prompt"
 
 # Plugins
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
@@ -75,13 +59,10 @@ zsh_add_plugin "zsh-users/zsh-completions"
 zsh_add_plugin "hcgraf/zsh-sudo"
 zsh_add_plugin "Yabanahano/web-search"
 zsh_add_plugin "agkozak/zsh-z"
-
-plugins=( ... web-search)
-plugins=(... sudo)
+zsh_add_plugin "romkatv/powerlevel10k"
 
 
-
-# zsh_add_completion "esc/conda-zsh-completion" false
+zsh_add_completion "esc/conda-zsh-completion" false
 # For more plugins: https://github.com/unixorn/awesome-zsh-plugins
 # More completions https://github.com/zsh-users/zsh-completions
 
@@ -115,56 +96,30 @@ bindkey -r "^d"
 autoload edit-command-line; zle -N edit-command-line
 # bindkey '^e' edit-command-line
 
-# TODO Remove these
-#setxkbmap -option caps:escape
-# xset r rate 210 40
-
-# Speedy keys
-# xset r rate 210 40
 
 # Environment variables set everywhere
-# export EDITOR="nvim"
-export TERMINAL="alacritty"
-export BROWSER="brave"
-export PAGER="less"
+export EDITOR="nvim"
+# export TERMINAL="alacritty"
+# export BROWSER="brave"
+# export PAGER="less"
 
 # For QT Themes
-export QT_QPA_PLATFORMTHEME=qt5ct
+# export QT_QPA_PLATFORMTHEME=qt5ct
 
-# remap caps to escape
-# setxkbmap -option caps:escape
-# swap escape and caps
-# setxkbmap -option caps:swapescape
  [[ -s /root/.autojump/etc/profile.d/autojump.sh ]] && source /root/.autojump/etc/profile.d/autojump.sh
 
-autoload -U compinit && compinit -u
+# autoload -U compinit && compinit -u
 
 
-# colour  output  for trackback out for  python error
-
-norm="$(printf '\033[0m')" #returns to "normal"
-bold="$(printf '\033[0;1m')" #set bold
-red="$(printf '\033[0;31m')" #set red
-boldyellowonblue="$(printf '\033[0;1;33;44m')"
-boldyellow="$(printf '\033[0;1;33m')"
-boldred="$(printf '\033[0;1;31m')" #set bold, and set red.
-
-copython() {
-        python $@ 2>&1 | sed -e "s/Traceback/${boldyellowonblue}&${norm}/g" \
-        -e "s/File \".*\.py\".*$/${boldyellow}&${norm}/g" \
-        -e "s/\, line [[:digit:]]\+/${boldred}&${norm}/g"}
 
 # colur  tree command
 # eval "$(dircolors -b)"
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
-export PATH=$PATH:/$HOME/julia-1.7.3/bin
-export PATH=$PATH:$HOME/node_modules/.bin
-export PATH=$PATH:$HOME/bin
 # eval "$(starship init zsh)"
 # export DISPLAY=172.30.240.1:0.0
 # export LIBGL_ALWAYS_INDIRECT=1
+
+
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
