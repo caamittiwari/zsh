@@ -41,7 +41,7 @@ function zsh_add_completion() {
         python$1 -m venv $PWD/.venv && source .venv/bin/activate
         fi
         # $(pip3 install pylint) # linter  added virtual  env 
-        touch $PWD/pyrightconfig.json && echo '{ "venvPath": "." , "venv":".venv"}' > $PWD/pyrightconfig.json  # to avoid import error 
+        # touch $PWD/pyrightconfig.json && echo '{ "venvPath": "." , "venv":".venv"}' > $PWD/pyrightconfig.json  # to avoid import error 
  }
 
  

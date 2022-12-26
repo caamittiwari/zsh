@@ -87,3 +87,5 @@ alias icode='code-insiders'
 # creating dotfile  bare repostitory  configuration   short command
 
 alias config='/usr/bin/git --git-dir=$HOME/dotfile/ --work-tree=$HOME'
+# find path by fsf
+alias path='echo $PATH | tr ":" "\n"|fzf'

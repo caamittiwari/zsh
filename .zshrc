@@ -44,7 +44,7 @@ autoload -Uz colors && colors
 
 # Add on file with .zshrc
 #"zsh-prompt"
-zsh_add_file=("zsh-functions" "zsh-prompt"  "zsh-aliases" "zsh-vim-mode")
+zsh_add_file=( "zsh-functions" "zsh-exports" "zsh-prompt"  "zsh-aliases" "zsh-vim-mode")
 for file in "${zsh_add_file[@]}" 
 do
   source "$ZDOTDIR/$file" 
@@ -106,7 +106,7 @@ export EDITOR="nvim"
 # For QT Themes
 # export QT_QPA_PLATFORMTHEME=qt5ct
 
- [[ -s /root/.autojump/etc/profile.d/autojump.sh ]] && source /root/.autojump/etc/profile.d/autojump.sh
+ # [[ -s /root/.autojump/etc/profile.d/autojump.sh ]] && source /root/.autojump/etc/profile.d/autojump.sh
 
 # autoload -U compinit && compinit -u
 
@@ -118,7 +118,8 @@ export EDITOR="nvim"
 # export DISPLAY=172.30.240.1:0.0
 # export LIBGL_ALWAYS_INDIRECT=1
 
-
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 
 # >>> conda initialize >>>
