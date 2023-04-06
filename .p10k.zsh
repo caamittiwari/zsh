@@ -107,8 +107,8 @@
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
     battery               # internal battery
-    load                  # CPU load
-    disk_usage            # disk usage
+    # load                  # CPU load
+    # disk_usage            # disk usage
     ram                   # free RAM
     # swap                  # used swap
     # wifi                  # wifi speed

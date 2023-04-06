@@ -1,4 +1,19 @@
 
+#*Powerlevel10k  configuration *
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below. 
+if [[ -r '${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh' ]]; then
+  source '${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh'
+fi
+
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
+
 #!/usr/bin/sh
 zmodload zsh/zprof
 export ZDOTDIR=$HOME/.config/zsh 
@@ -43,8 +58,8 @@ zle -N down-line-or-beginning-search
 autoload -Uz colors && colors
 
 # Add on file with .zshrc
-#"zsh-prompt"
-zsh_add_file=( "zsh-functions" "zsh-exports" "zsh-prompt"  "zsh-aliases" "zsh-vim-mode")
+#"zsh-prompt"  file not used  as 10k used 
+zsh_add_file=( "zsh-functions" "zsh-exports"   "zsh-aliases" "zsh-vim-mode")
 for file in "${zsh_add_file[@]}" 
 do
   source "$ZDOTDIR/$file" 
@@ -60,6 +75,7 @@ zsh_add_plugin "hcgraf/zsh-sudo"
 zsh_add_plugin "Yabanahano/web-search"
 zsh_add_plugin "agkozak/zsh-z"
 zsh_add_plugin "romkatv/powerlevel10k"
+zsh_add_plugin "Aloxaf/fzf-tab"
 
 
 zsh_add_completion "esc/conda-zsh-completion" false
@@ -122,18 +138,23 @@ export EDITOR="nvim"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 
-# >>> conda initialize >>>
+# >>> conda initialize >>> 
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/amit/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
     if [ -f "/home/amit/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/amit/anaconda3/etc/profile.d/conda.sh"
+         "/home/amit/anaconda3/etc/profile.d/conda.sh"
     else
         export PATH="/home/amit/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+
+
+
+
 
