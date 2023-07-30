@@ -1,0 +1,22 @@
+#!/bin/bash
+#By default, $ZSH_HIGHLIGHT_HIGHLIGHTERS is unset and only the main highlighter is active.
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+
+# Declare the variable 
+typeset -A ZSH_HIGHLIGHT_STYLES
+
+# To differentiate aliases from other command types
+ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta,bold'
+
+# To differentiate funaction from other command types
+ZSH_HIGHLIGHT_STYLES[function]='fg=yellow,bold'
+
+# To have paths colored instead of underlined
+ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
+
+# To disable highlighting of globbing expressions
+ZSH_HIGHLIGHT_STYLES[globbing]='none'
+
+ZSH_HIGHLIGHT_STYLES[cursor]='bg=blue'
+ZSH_HIGHLIGHT_STYLES[line]='bold'

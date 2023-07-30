@@ -32,7 +32,8 @@ zle_highlight=('paste:none')
 
 # beeping is annoying
 unsetopt BEEP 
-
+# avoid duplicates in history
+setopt HIST_IGNORE_ALL_DUPS
 
 # completions
 autoload -Uz compinit
@@ -54,33 +55,9 @@ autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-# Colors
+# Colors ``
 autoload -Uz colors && colors
 
-# Add on file with .zshrc
-#"zsh-prompt"  file not used  as 10k used 
-zsh_add_file=( "zsh-functions" "zsh-exports"   "zsh-aliases" "zsh-vim-mode")
-for file in "${zsh_add_file[@]}" 
-do
-  source "$ZDOTDIR/$file" 
-done  
-
-
-# Plugins
-zsh_add_plugin "zsh-users/zsh-autosuggestions"
-zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
-zsh_add_plugin "hlissner/zsh-autopair"
-zsh_add_plugin "zsh-users/zsh-completions"
-zsh_add_plugin "hcgraf/zsh-sudo"
-zsh_add_plugin "Yabanahano/web-search"
-zsh_add_plugin "agkozak/zsh-z"
-zsh_add_plugin "romkatv/powerlevel10k"
-zsh_add_plugin "Aloxaf/fzf-tab"
-
-
-zsh_add_completion "esc/conda-zsh-completion" false
-# For more plugins: https://github.com/unixorn/awesome-zsh-plugins
-# More completions https://github.com/zsh-users/zsh-completions
 
 # Key-bindings
 bindkey -s '^o' 'ranger^M'
@@ -153,6 +130,30 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# Add on file with .zshrc
+#"zsh-prompt"  file not used  as 10k used 
+zsh_add_file=( "zsh-functions" "zsh-exports"  "zsh-syntax-highlight"  "zsh-aliases" "zsh-vim-mode")
+for file in "${zsh_add_file[@]}" 
+do
+  source "$ZDOTDIR/$file" 
+done  
+
+
+# Plugins
+zsh_add_plugin "zsh-users/zsh-autosuggestions"
+zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
+zsh_add_plugin "hlissner/zsh-autopair"
+zsh_add_plugin "zsh-users/zsh-completions"
+zsh_add_plugin "hcgraf/zsh-sudo"
+zsh_add_plugin "Yabanahano/web-search"
+zsh_add_plugin "agkozak/zsh-z"
+zsh_add_plugin "romkatv/powerlevel10k"
+zsh_add_plugin "Aloxaf/fzf-tab"
+
+
+zsh_add_completion "esc/conda-zsh-completion" false
+# For more plugins: https://github.com/unixorn/awesome-zsh-plugins
+# More completions https://github.com/zsh-users/zsh-completions
 
 
 
